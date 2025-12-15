@@ -335,7 +335,7 @@ export default function BuyInternetPage() {
         >
           <span className="text-green-500">Abia</span> Tech Hub
         </h1>
-        <p className={`max-w-xl ${modeClasses.subtext}`}>
+        <p className={`max-w-xl text-sm ${modeClasses.subtext}`}>
           Fast, reliable internet access powered by Starlink. Choose a plan and
           get connected instantly.
         </p>
@@ -364,7 +364,7 @@ export default function BuyInternetPage() {
                   {/* Header Section */}
                   <div>
                     <h2
-                      className={`text-3xl font-bold mb-1 ${modeClasses.heading}`}
+                      className={`text-xl font-bold mb-1 ${modeClasses.heading}`}
                     >
                       {plan.name}
                     </h2>
