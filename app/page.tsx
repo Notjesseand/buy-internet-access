@@ -364,11 +364,11 @@ export default function BuyInternetPage() {
                   {/* Header Section */}
                   <div>
                     <h2
-                      className={`text-xl font-bold mb-1 ${modeClasses.heading}`}
+                      className={`text-sl md:text-2xl font-bold mb-1 ${modeClasses.heading}`}
                     >
                       {plan.name}
                     </h2>
-                    <p className={`${modeClasses.subtext}`}>
+                    <p className={`${modeClasses.subtext} text-base md:text-sm`}>
                       {plan.description}
                     </p>
                   </div>
