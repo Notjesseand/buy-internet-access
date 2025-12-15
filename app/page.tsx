@@ -386,7 +386,7 @@ export default function BuyInternetPage() {
                     </span>
                   </div>
                   {/* Features Section */}
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 md:text-sm ">
                     <div
                       className={`flex items-center gap-3 ${modeClasses.detailText}`}
                     >
@@ -418,7 +418,7 @@ export default function BuyInternetPage() {
                 {/* End of flex-grow wrapper */}
                 {/* Button Section - This will be pushed to the bottom */}
                 <Button
-                  className={`${modeClasses.button} w-full py-6 text-lg rounded-xl mt-auto`} // ADDED mt-auto
+                  className={`${modeClasses.button} w-full py-6 text-lg sm:text-base rounded-xl mt-auto`} // ADDED mt-auto
                 >
                   Get {plan.name}
                 </Button>
