@@ -375,12 +375,12 @@ export default function BuyInternetPage() {
                   {/* Price Section */}
                   <div className="border-b pb-4">
                     <span
-                      className={`text-5xl font-extrabold ${modeClasses.heading}`}
+                      className={`text-4xl font-extrabold ${modeClasses.heading}`}
                     >
                       {plan.price}
                     </span>
                     <span
-                      className={`text-xl font-medium ml-2 ${modeClasses.subtext}`}
+                      className={`text-xl md:text-base font-medium ml-2 ${modeClasses.subtext}`}
                     >
                       {plan.price} / {plan.duration}
                     </span>
