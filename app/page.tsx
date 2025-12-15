@@ -132,7 +132,7 @@ export default function BuyInternetPage() {
       </motion.div>
 
       {/* The grid container forces all columns to be the height of the tallest item */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl items-stretch px-4 sm:px-12 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl items-stretch px-0 sm:px-12 ">
         {plans.map((plan, index) => (
           <motion.div
             key={plan.name}
