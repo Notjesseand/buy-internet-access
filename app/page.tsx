@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Wifi, Clock, Zap, Sun, Moon } from "lucide-react";
+import { Wifi, Clock, Zap, Sun, Moon, LaptopMinimal } from "lucide-react";
 import { motion } from "framer-motion";
 
 // --- Plans Array (Unchanged) ---
@@ -14,6 +14,7 @@ const plans = [
     speed: "20 Mbps",
     rate: "₦200/hr",
     cap: 25,
+    devices: 1,
     description: "Perfect for quick checks and basic browsing.",
   },
   {
@@ -22,7 +23,17 @@ const plans = [
     duration: "24 Hours",
     speed: "20 Mbps",
     description: "All-day access for work, streaming, and socializing.",
-    cap: 100,
+    cap: 50,
+    devices: 1,
+  },
+  {
+    name: "Daily Access II",
+    price: "₦500",
+    duration: "24 Hours",
+    speed: "25 Mbps",
+    description: "All-day access for work, streaming, and socializing.",
+    cap: "unlimited",
+    devices: 2,
   },
   {
     name: "Weekly Connect", // New Weekly Plan
@@ -31,6 +42,7 @@ const plans = [
     speed: "30 Mbps",
     description: "Reliable connection for your full work week.",
     cap: "unlimited",
+    devices: 2,
   },
   {
     name: "Power User",
@@ -39,6 +51,7 @@ const plans = [
     speed: "50 Mbps",
     description: "High-speed for heavy downloads and gaming.",
     cap: "unlimited",
+    devices: 2,
   },
   {
     name: "Monthly Pro", // New Monthly Plan (optional, but good for range)
@@ -47,6 +60,7 @@ const plans = [
     speed: "100 Mbps",
     description: "The ultimate package for consistent high performance.",
     cap: "unlimited",
+    devices: 2,
   },
 ];
 
@@ -158,7 +172,9 @@ export default function BuyInternetPage() {
                     >
                       {plan.name}
                     </h2>
-                    <p className={`${modeClasses.subtext} text-base md:text-sm`}>
+                    <p
+                      className={`${modeClasses.subtext} text-base md:text-sm`}
+                    >
                       {plan.description}
                     </p>
                   </div>
@@ -201,6 +217,16 @@ export default function BuyInternetPage() {
                         {plan.cap === "unlimited"
                           ? "Unlimited"
                           : `${plan.cap} GB Cap`}
+                      </span>
+                    </div>
+                    <div
+                      className={`flex items-center gap-3 ${modeClasses.detailText}`}
+                    >
+                      <LaptopMinimal
+                        className={`w-5 h-5 ${modeClasses.iconColor}`}
+                      />
+                      <span className="font-medium">
+                        {plan.devices > 1 ? "Connect up to 2 devices" : "Connect 1 device"}
                       </span>
                     </div>
                   </div>
