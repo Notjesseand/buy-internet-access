@@ -51,7 +51,7 @@ const plans = [
     speed: "50 Mbps",
     description: "High-speed for heavy downloads and gaming.",
     cap: "unlimited",
-    devices: 2,
+    devices: 4,
   },
   {
     name: "Monthly Pro", // New Monthly Plan (optional, but good for range)
@@ -226,7 +226,7 @@ export default function BuyInternetPage() {
                         className={`w-5 h-5 ${modeClasses.iconColor}`}
                       />
                       <span className="font-medium">
-                        {plan.devices > 1 ? "Connect up to 2 devices" : "Connect 1 device"}
+                        {plan.devices > 1 ? `Connect up to ${plan.devices} devices` : "Connect 1 device"}
                       </span>
                     </div>
                   </div>
