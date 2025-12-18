@@ -4,12 +4,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Wifi, Clock, Zap, Sun, Moon, LaptopMinimal } from "lucide-react";
 import { motion } from "framer-motion";
+import popUpDialog from "@/components/pop-up-dialog/pop-up-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import Link from "next/link";
+// import { Router } from "next/navigation";
 
 // --- Plans Array (Unchanged) ---
 const plans = [
   {
     name: "Quick Surf",
-    price: "₦200",
+    price: 200,
     duration: "2 Hour",
     speed: "20 Mbps",
     rate: "₦200/hr",
@@ -19,7 +33,7 @@ const plans = [
   },
   {
     name: "Daily Access",
-    price: "₦350",
+    price: 350,
     duration: "24 Hours",
     speed: "20 Mbps",
     description: "All-day access for work, streaming, and socializing.",
@@ -28,7 +42,7 @@ const plans = [
   },
   {
     name: "Daily Access II",
-    price: "₦500",
+    price: 500,
     duration: "24 Hours",
     speed: "25 Mbps",
     description: "All-day access for work, streaming, and socializing.",
@@ -37,7 +51,7 @@ const plans = [
   },
   {
     name: "Weekly Connect", // New Weekly Plan
-    price: "₦1,500",
+    price: 1500,
     duration: "7 Days",
     speed: "30 Mbps",
     description: "Reliable connection for your full work week.",
@@ -46,7 +60,7 @@ const plans = [
   },
   {
     name: "Power User",
-    price: "₦1,000",
+    price: 1000,
     duration: "1 Day",
     speed: "50 Mbps",
     description: "High-speed for heavy downloads and gaming.",
@@ -55,7 +69,7 @@ const plans = [
   },
   {
     name: "Monthly Pro", // New Monthly Plan (optional, but good for range)
-    price: "₦10,000",
+    price: 10000,
     duration: "30 Days",
     speed: "100 Mbps",
     description: "The ultimate package for consistent high performance.",
@@ -113,11 +127,17 @@ export default function BuyInternetPage() {
             }`}
           />
         </div>
+        <Link
+          href="/auth"
+          className="text-white underline decoration-[#c9a678] absolute top-2 left-5 "
+        >
+          sign up
+        </Link>
 
         {/* --- Toggle Button --- */}
         <Button
           onClick={toggleDarkMode}
-          className={`absolute top-4 right-4 ${modeClasses.button} px-2.5 rounded-full`}
+          className={`absolute top-4 right-4 ${modeClasses.button} px-3 rounded-full`}
           variant="ghost"
         >
           {isDarkMode ? (
@@ -183,7 +203,7 @@ export default function BuyInternetPage() {
                     <span
                       className={`text-4xl font-extrabold ${modeClasses.heading}`}
                     >
-                      {plan.price}
+                      {plan.price.toLocaleString()}
                     </span>
                     <span
                       className={`text-xl md:text-base font-medium ml-2 ${modeClasses.subtext}`}
@@ -226,18 +246,50 @@ export default function BuyInternetPage() {
                         className={`w-5 h-5 ${modeClasses.iconColor}`}
                       />
                       <span className="font-medium">
-                        {plan.devices > 1 ? `Connect up to ${plan.devices} devices` : "Connect 1 device"}
+                        {plan.devices > 1
+                          ? `Connect up to ${plan.devices} devices`
+                          : "Connect 1 device"}
                       </span>
                     </div>
                   </div>
                 </div>{" "}
                 {/* End of flex-grow wrapper */}
                 {/* Button Section - This will be pushed to the bottom */}
-                <Button
-                  className={`${modeClasses.button} w-full py-6 text-lg sm:text-base rounded-xl mt-auto`} // ADDED mt-auto
-                >
-                  Get {plan.name}
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    {" "}
+                    <div
+                      className={`${modeClasses.button} w-full py-3 text-lg sm:text-base rounded-xl  mt-auto`} // ADDED mt-auto
+                    >
+                      Get {plan.name}
+                    </div>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="font-montserrat">
+                        You're about to purchase the {plan.name} plan.
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="mt-4 font-montserrat text-black">
+                        You'll be charged {plan.price.toLocaleString()} for{" "}
+                        {plan.duration} of internet access at up to {plan.speed}{" "}
+                        speed.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="font-montserrat">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Link
+                          href={`/payment?plan=${plan.name}&amount=${plan.price}&duration=${plan.duration}`}
+                          className="font-montserrat"
+                        >
+                          Continue
+                        </Link>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </CardContent>
             </Card>
           </motion.div>
