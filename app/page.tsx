@@ -267,10 +267,10 @@ export default function BuyInternetPage() {
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle className="font-montserrat">
-                        You're about to purchase the {plan.name} plan.
+                        You&apos;re about to purchase the {plan.name} plan.
                       </AlertDialogTitle>
                       <AlertDialogDescription className="mt-4 font-montserrat text-black">
-                        You'll be charged {plan.price.toLocaleString()} for{" "}
+                        You&apos;ll be charged {plan.price.toLocaleString()} for{" "}
                         {plan.duration} of internet access at up to {plan.speed}{" "}
                         speed.
                       </AlertDialogDescription>
