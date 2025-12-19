@@ -272,9 +272,78 @@
 //   return Promise.resolve();
 // }
 
+// import { Client } from "ssh2";
+// import "dotenv/config";
+// import tls from "tls";
+
+// export async function createHotspotUser({
+//   username,
+//   password,
+//   profile,
+//   limitUptime = undefined,
+// }) {
+//   return new Promise((resolve, reject) => {
+//     const conn = new Client();
+//     const host = process.env.MIKROTIK_HOST;
+//     const port = 443; // Reverting to 443 for maximum stability
+
+//     console.log(`Attempting connection to ${host} via port ${port}...`);
+
+//     const socket = tls.connect(
+//       {
+//         host: host,
+//         port: port,
+//         servername: host,
+//         rejectUnauthorized: false,
+//         checkServerIdentity: () => undefined, // This ignores the "wrong version" header issue
+//       },
+//       () => {
+//         console.log("🔒 TLS Tunnel established. Initializing SSH...");
+
+//         conn.connect({
+//           sock: socket,
+//           username: process.env.MIKROTIK_USER,
+//           password: process.env.MIKROTIK_PASS,
+//           readyTimeout: 30000,
+//         });
+//       }
+//     );
+
+//     socket.on("error", (err) => {
+//       console.error("TLS Socket Error:", err.message);
+//       reject(new Error("Tailscale Error: " + err.message));
+//     });
+
+//     conn
+//       .on("ready", () => {
+//         console.log("🔑 SSH Ready! Creating user...");
+//         let command = `/ip hotspot user add name="${username}" password="${password}" profile="${profile}"`;
+//         if (limitUptime) command += ` limit-uptime=${limitUptime}`;
+
+//         conn.exec(command, (err, stream) => {
+//           if (err) {
+//             conn.end();
+//             return reject(err);
+//           }
+//           stream.on("close", (code) => {
+//             conn.end();
+//             resolve(code === 0);
+//           });
+//         });
+//       })
+//       .on("error", (err) => {
+//         console.error("SSH Error:", err.message);
+//         reject(err);
+//       });
+//   });
+// }
+
+// export async function close() {
+//   return Promise.resolve();
+// }
+
 import { Client } from "ssh2";
 import "dotenv/config";
-import tls from "tls";
 
 export async function createHotspotUser({
   username,
@@ -285,34 +354,10 @@ export async function createHotspotUser({
   return new Promise((resolve, reject) => {
     const conn = new Client();
     const host = process.env.MIKROTIK_HOST;
-    const port = 443; // Reverting to 443 for maximum stability
+    // USE PORT 10000 (Recommended) or 443, but NOT with tls.connect
+    const port = parseInt(process.env.MIKROTIK_PORT) || 10000;
 
     console.log(`Attempting connection to ${host} via port ${port}...`);
-
-    const socket = tls.connect(
-      {
-        host: host,
-        port: port,
-        servername: host,
-        rejectUnauthorized: false,
-        checkServerIdentity: () => undefined, // This ignores the "wrong version" header issue
-      },
-      () => {
-        console.log("🔒 TLS Tunnel established. Initializing SSH...");
-
-        conn.connect({
-          sock: socket,
-          username: process.env.MIKROTIK_USER,
-          password: process.env.MIKROTIK_PASS,
-          readyTimeout: 30000,
-        });
-      }
-    );
-
-    socket.on("error", (err) => {
-      console.error("TLS Socket Error:", err.message);
-      reject(new Error("Tailscale Error: " + err.message));
-    });
 
     conn
       .on("ready", () => {
@@ -334,10 +379,13 @@ export async function createHotspotUser({
       .on("error", (err) => {
         console.error("SSH Error:", err.message);
         reject(err);
+      })
+      .connect({
+        host: host,
+        port: port,
+        username: process.env.MIKROTIK_USER,
+        password: process.env.MIKROTIK_PASS,
+        readyTimeout: 30000,
       });
   });
-}
-
-export async function close() {
-  return Promise.resolve();
 }
