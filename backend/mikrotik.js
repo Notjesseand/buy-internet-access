@@ -1,3 +1,4 @@
+// backend/mikrotik.js
 import { Client } from "ssh2";
 import "dotenv/config";
 
@@ -42,8 +43,10 @@ export async function createHotspotUser({
         port: port,
         username: process.env.MIKROTIK_USER,
         password: process.env.MIKROTIK_PASS,
-        readyTimeout: 40000,
-        // No TLS settings here—SSH handles security itself
+        readyTimeout: 60000, // Increase to 60 seconds for slow routing
+        keepaliveInterval: 10000, // Send a heartbeat every 10 seconds
+        keepaliveCountMax: 3,
+        debug: (msg) => console.log("SSH DEBUG:", msg), // This will show us EXACTLY where it fails
       });
   });
 }
