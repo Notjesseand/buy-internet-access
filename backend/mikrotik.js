@@ -8,7 +8,6 @@ import "dotenv/config";
  * Trigger this function after your payment gateway confirms a successful transaction.
  */
 
-
 export async function createHotspotUser({
   username,
   password,
@@ -56,7 +55,7 @@ export async function createHotspotUser({
       })
       .connect({
         host: process.env.MIKROTIK_HOST || "192.168.10.1",
-        port: 22,
+        port: parseInt(process.env.MIKROTIK_PORT) || 22,
         username: process.env.MIKROTIK_USER,
         password: process.env.MIKROTIK_PASS,
         // Added to match your friend's specific terminal requirement
