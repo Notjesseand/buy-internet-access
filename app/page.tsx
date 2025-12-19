@@ -129,7 +129,7 @@ export default function BuyInternetPage() {
         </div>
         <Link
           href="/auth"
-          className="text-white underline decoration-[#c9a678] absolute top-2 left-5 "
+          className={`underline decoration-[#c9a678] absolute top-2 left-5  ${isDarkMode ? "text-white" : "text-gray-800"} `}
         >
           sign up
         </Link>
